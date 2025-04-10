@@ -183,7 +183,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "F:\\practice\\nextjs-shoppingmall\\prisma\\prisma\\generated",
+      "value": "E:\\study\\nextjs-shoppingmall\\prisma\\prisma\\generated",
       "fromEnvVar": null
     },
     "config": {
@@ -199,7 +199,7 @@ const config = {
     "previewFeatures": [
       "postgresqlExtensions"
     ],
-    "sourceFilePath": "F:\\practice\\nextjs-shoppingmall\\prisma\\schema.prisma",
+    "sourceFilePath": "E:\\study\\nextjs-shoppingmall\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

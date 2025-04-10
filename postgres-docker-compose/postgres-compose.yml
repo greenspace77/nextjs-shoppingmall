@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ankane/pgvector:latest
+    image: postgres:latest
     container_name: ecommerce_db
     restart: always
     shm_size: 128mb
