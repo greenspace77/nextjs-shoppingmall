@@ -18,7 +18,7 @@ const registerSchema = z
     email: z.string().email({ message: "올바른 이메일 주소를 입력해주세요." }),
     password: z
       .string()
-      .min(8, { message: "비밀번호는 8자 이상이어야 합니다." }),
+      .min(6, { message: "비밀번호는 6자 이상이어야 합니다." }),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -42,7 +42,14 @@ export default function RegisterPage() {
   const onSubmit = async (data: RegisterForm) => {
     setIsLoading(true);
     // 여기에 실제 회원가입 로직을 구현합니다.
-    // 예: API 호출, 상태 업데이트 등
+    const response = await fetch("/api/register", {
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+
+    const json = await response.json()
+    console.log("json in register page: ", json)
+
     await new Promise((resolve) => setTimeout(resolve, 2000)); // 임시 지연
     setIsLoading(false);
     toast({
