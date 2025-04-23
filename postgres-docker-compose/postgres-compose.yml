@@ -17,6 +17,7 @@ services:
     environment:
       POSTGRES_PASSWORD: wjdekdp9 # must change your own password.
       POSTGRES_USER: postgres # should change your own user name.
+      POSTGRES_DB: mydb # should change your own database name.
 
 networks:
   yesnetwork:

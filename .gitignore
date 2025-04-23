@@ -10,9 +10,9 @@
 !.yarn/releases
 !.yarn/versions
 package-lock.json
-/app/generated
-/prisma/migrations
-/prisma/generated
+src/app/generated
+prisma/migrations
+prisma/prisma/generated
 
 # testing
 /coverage
