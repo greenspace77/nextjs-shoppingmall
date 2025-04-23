@@ -11,6 +11,8 @@
 !.yarn/versions
 package-lock.json
 /app/generated
+/prisma/migrations
+/prisma/generated
 
 # testing
 /coverage
