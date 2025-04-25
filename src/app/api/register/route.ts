@@ -13,6 +13,12 @@ const registerSchema = z
     confirmPassword: z.string(),
   })
 
+export type RegisterResponse = {
+  ok: boolean;
+  message?: string;
+  error?: string;
+}
+
 export async function POST(req: NextRequest) {
   const args = await req.json();
   
@@ -21,7 +27,7 @@ export async function POST(req: NextRequest) {
   // 유효성 검사 결과를 확인합니다.
   // 유효성 검사를 통과하지 못한 경우 에러 응답을 반환합니다.
   if (!validatedFileds.success) {
-    return NextResponse.json({ error: 'Invalid fields' }, { status: 400 })
+    return NextResponse.json({ ok: false, error: 'Invalid fields' }, { status: 400 })
   }
 
   // validatedFileds.data는 유효성 검사를 통과한 데이터입니다.
@@ -39,7 +45,7 @@ export async function POST(req: NextRequest) {
 
   // 유저가 이미 존재하는 경우 에러 처리
   if (user) {
-    return NextResponse.json({ error: 'User already exists' }, { status: 400 } )
+    return NextResponse.json({ ok: false, error: 'User already exists' }, { status: 400 } )
   }
 
   // 비밀번호 해싱 로직 추가
@@ -60,9 +66,9 @@ export async function POST(req: NextRequest) {
   // 유저 생성 후 응답 반환
   // 유저 생성 실패 시 에러 처리
   if (!newUser) {
-    return NextResponse.json({ error: 'User creation failed' }, { status: 500 })
+    return NextResponse.json({ ok: false, message: 'User creation failed' }, { status: 500 })
   }
 
   // 유저 생성 성공 시 응답
-  return NextResponse.json({ messsage: 'User created successfully'})
+  return NextResponse.json({ ok: true, error: 'User created successfully'})
 }

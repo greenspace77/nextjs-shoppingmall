@@ -10,7 +10,7 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
-import { useToast } from "../../components/ui/use-toast";
+import { toast } from "sonner"
 
 const registerSchema = z
   .object({
@@ -30,7 +30,6 @@ type RegisterForm = z.infer<typeof registerSchema>;
 
 export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
-  const { toast } = useToast();
   const {
     register,
     handleSubmit,
@@ -50,15 +49,14 @@ export default function RegisterPage() {
     const json = await response.json()
     console.log("json in register page: ", json)
 
-    await new Promise((resolve) => setTimeout(resolve, 2000)); // 임시 지연
-    setIsLoading(false);
-    toast({
-      title: "회원가입 성공",
-      description: "회원가입이 완료되었습니다. 로그인해주세요.",
-    });
-    // 회원가입 후 로그인 페이지로 리다이렉트 (실제 구현 시 추가)
-    // router.push('/login')
-  };
+    if (response.ok) {
+      setIsLoading(false);
+      toast.success('회원가입이 완료되었습니다. 로그인해주세요.');
+    } else {
+      setIsLoading(false);
+      toast.error('회원가입에 실패했습니다. 다시 시도해주세요.');
+    }
+  }
 
   return (
     <div className='container mx-auto px-4 py-8 max-w-md'>
