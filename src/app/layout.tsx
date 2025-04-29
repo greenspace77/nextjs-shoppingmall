@@ -30,7 +30,7 @@ export default function RootLayout({
         >
           <ShopProvider>
             {children}
-            <Toaster />
+            <Toaster  richColors />
           </ShopProvider>
         </ThemeProvider>
       </body>
