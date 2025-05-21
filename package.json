@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "pathgen": "pathgen --input ./src/app --output ./src/lib/apiRoutes.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",

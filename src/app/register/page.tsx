@@ -11,6 +11,9 @@ import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { toast } from "sonner"
+import { apiRoutes } from "@/src/lib/apiRoutes";
+import { RegisterResponse } from "../api/register/route";
+import { useRouter } from "next/navigation";
 
 const registerSchema = z
   .object({
@@ -28,11 +31,24 @@ const registerSchema = z
 
 type RegisterForm = z.infer<typeof registerSchema>;
 
+const registerUser = async (data: RegisterForm) => {
+  const response = await fetch(apiRoutes.routes.register.path, {
+    method: "POST",
+    body: JSON.stringify(data),
+  })
+
+  const json = await response.json()
+  return json as RegisterResponse
+}
+
 export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
+
     formState: { errors },
   } = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
@@ -41,20 +57,17 @@ export default function RegisterPage() {
   const onSubmit = async (data: RegisterForm) => {
     setIsLoading(true);
     // 여기에 실제 회원가입 로직을 구현합니다.
-    const response = await fetch("/api/register", {
-      method: "POST",
-      body: JSON.stringify(data),
-    })
-
-    const json = await response.json()
-    console.log("json in register page: ", json)
+    const response = await registerUser(data);
 
     if (response.ok) {
       setIsLoading(false);
-      toast.success('회원가입이 완료되었습니다. 로그인해주세요.');
+      toast.success(response.message || '회원가입이 완료되었습니다.');
+      // 회원가입 성공 후 리다이렉트 또는 다른 작업을 수행합니다.
+      router.push('/login');
     } else {
       setIsLoading(false);
-      toast.error('회원가입에 실패했습니다. 다시 시도해주세요.');
+      toast.error(response.error || '회원가입에 실패했습니다.');
+      // 에러 처리 로직을 추가합니다.
     }
   }
 
